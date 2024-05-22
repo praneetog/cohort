@@ -1,0 +1,52 @@
+<html>
+    <script>
+        let globalId = 1
+
+        function markAsDone(todoId){
+            const parent = document.getElementById(todoId)
+            parent.children[2].innerHTML = "Done!!"
+        }
+
+        function createChild(title, description, id){
+            const child = document.createElement('div')
+            const firstGParent = document.createElement("div")
+            firstGParent.innerHTML = title
+            const secondGParent = document.createElement("div")
+            secondGParent.innerHTML = description
+            const thirdGParent = document.createElement("button")
+            thirdGParent.innerHTML = "Mark as Done!"
+            thirdGParent.setAttribute("onclick", `markAsDone(${id})`)
+            child.appendChild(firstGParent)
+            child.appendChild(secondGParent)
+            child.appendChild(thirdGParent)
+            child.setAttribute("id", id)
+            return child;
+        }
+
+        // function addToDo(){
+        //     const title = document.getElementById("title").value
+        //     const description = document.getElementById("description").value
+        //     const parent = document.getElementById("todo")
+        //     parent.appendChild(createChild(title, description, globalId++))
+        // }
+
+        function updateDomAccToState(state){
+            const parent = document.getElementById("todo")
+            parent.innerHTML = ""
+            for(let i=0; i<state.length; i++){
+                const child = createChild(createChild(state[i].title, state[i].description, state[i].id))
+                parent.appendChild(child)
+            }
+        } 
+
+    </script>
+    <body>        
+        <div>
+            <input id="title" type="text" placeholder="title"><br></br>
+            <input id="description" type="text" placeholder="description"><br></br>
+            <button onclick="addToDo()">Add To Do</button><br></br>
+
+            <div id="todo"></div>
+        </div>
+    </body>
+</html>

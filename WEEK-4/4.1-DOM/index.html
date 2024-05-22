@@ -1,0 +1,47 @@
+<html>
+    <script>
+        /*
+        //By using normal function
+        function populateDiv1() {
+            const a = document.getElementById("firstInput").value
+            const b = document.getElementById("secondInput").value
+
+            fetch("https://sum-server.100xdevs.com/sum?a="+a+"&b="+b)
+            .then(function(response){
+                response.text()
+                .then(function(ans){
+                    document.getElementById("finalSum").innerHTML = ans;
+                })
+            })
+        }
+        */
+
+        let timeout
+        function debouncePopulateDiv(){
+            clearTimeout(timeout)
+            setTimeout(function(){
+                populateDiv()
+            },100)
+        }
+
+        //By using Async function
+        async function populateDiv() {
+            const a = document.getElementById("firstInput").value
+            const b = document.getElementById("secondInput").value
+
+            const response = await fetch("http://localhost:3001/sum?a="+a+"&b="+b)
+            //This will fetch the result by sending a and b as queries
+            const ans = await response.text()
+            document.getElementById("finalSum").innerHTML = ans;
+        }
+
+    </script>
+    <body>
+        <input oninput="debouncePopulateDiv()" id="firstInput" type="text" placeholder="First number"> 
+        <br></br>
+        <input oninput="debouncePopulateDiv()" id="secondInput" type="text" placeholder="Second number">
+        <br></br>
+
+        <div id="finalSum"></div>
+    </body>
+</html>
